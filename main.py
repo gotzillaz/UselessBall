@@ -19,6 +19,9 @@ class UselessBall(Widget):
 
 class UselessJoy(Widget):
 
+    rad = NumericProperty(0)
+    dis = NumericProperty(0)
+
     def on_touch_down(self,touch):
         if self.collide_point(*touch.pos):
             touch.grab(self)
@@ -32,15 +35,17 @@ class UselessJoy(Widget):
             self.center_x = touch.x
             self.center_y = touch.y
             way = sqrt((self.center_x-nx) ** 2 + (self.center_y-ny) ** 2)
+            theta = 270 * 0.0174532925
+            if self.center_x-nx != 0:
+                theta = atan2((self.center_y-ny),(self.center_x-nx))
+            elif self.center_y-ny > 0:
+                theta = 90 * 0.0174532925
             if way > 30:
-                theta = 270 * 0.0174532925
-                if self.center_x-nx != 0:
-                    theta = atan2((self.center_y-ny),(self.center_x-nx))
-                elif self.center_y-ny > 0:
-                    theta = 90 * 0.0174532925
                 self.center_x = nx+30*cos(theta)
                 self.center_y = ny+30*sin(theta)
-                print theta
+            self.rad = theta
+            self.dis = way/30.0
+            print theta
 
     def on_touch_up(self,touch):
         if touch.grab_current is self:
@@ -52,6 +57,8 @@ class UselessJoy(Widget):
     def begin(self):
         self.center_x = self.parent.width / 10
         self.center_y = 70
+        self.rad = 0
+        self.dis = 0
 
 class UselessGame(Widget):
     ball = ObjectProperty(None)
@@ -61,6 +68,8 @@ class UselessGame(Widget):
         self.bounce_ball(self.ball)
     
     def bounce_ball(self,ball):
+        ball.center_x += self.joy.dis*5*cos(self.joy.rad)
+        ball.center_y += self.joy.dis*5*sin(self.joy.rad)
         if ball.y < 0:
             ball.y = 0
         elif ball.y > self.height-ball.height:
