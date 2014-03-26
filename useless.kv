@@ -1,0 +1,21 @@
+#:kivy 1.7.1
+
+<UselessBall>:
+    size: 50,50
+    canvas:
+        Ellipse:
+            pos: self.pos
+            size: self.size
+
+<UselessGame>
+    ball: game_ball
+
+    Label:         
+        font_size: 70
+        center_x: (root.width * 3) / 4
+        top: root.top - 50
+        text: "%d,%d" % (self.parent.ball.x, self.parent.ball.y)
+    
+    UselessBall:
+        id: game_ball
+        center: self.parent.center
