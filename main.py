@@ -41,11 +41,12 @@ class UselessJoy(Widget):
             elif self.center_y-ny > 0:
                 theta = 90 * 0.0174532925
             if way > 30:
+                way = 30
                 self.center_x = nx+30*cos(theta)
                 self.center_y = ny+30*sin(theta)
             self.rad = theta
             self.dis = way/30.0
-            print theta
+            print "Rad = " + str(theta) + " Distance = " + str(self.dis)
 
     def on_touch_up(self,touch):
         if touch.grab_current is self:
@@ -68,8 +69,8 @@ class UselessGame(Widget):
         self.bounce_ball(self.ball)
     
     def bounce_ball(self,ball):
-        ball.center_x += self.joy.dis*5*cos(self.joy.rad)
-        ball.center_y += self.joy.dis*5*sin(self.joy.rad)
+        ball.center_x += self.joy.dis*10*cos(self.joy.rad)
+        ball.center_y += self.joy.dis*10*sin(self.joy.rad)
         if ball.y < 0:
             ball.y = 0
         elif ball.y > self.height-ball.height:
