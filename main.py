@@ -3,6 +3,7 @@ from kivy.uix.widget import Widget
 from kivy.clock import Clock
 from kivy.properties import ObjectProperty
 from kivy.properties import NumericProperty
+from math import *
 
 class UselessBall(Widget):
     vx = NumericProperty(1)
@@ -17,19 +18,48 @@ class UselessBall(Widget):
         self.y += self.vy
 
 class UselessJoy(Widget):
-    nx = NumericProperty()
-    ny = NumericProperty()
 
     def on_touch_down(self,touch):
-        pass
+        if self.collide_point(*touch.pos):
+            touch.grab(self)
+            return True
+    
+    def on_touch_move(self,touch):
+        nx = self.parent.width/10
+        ny = 70
+        
+        if touch.grab_current is self:    
+            self.center_x = touch.x
+            self.center_y = touch.y
+            way = sqrt((self.center_x-nx) ** 2 + (self.center_y-ny) ** 2)
+            if way > 30:
+                theta = 270 * 0.0174532925
+                if self.center_x-nx != 0:
+                    theta = atan2((self.center_y-ny),(self.center_x-nx))
+                elif self.center_y-ny > 0:
+                    theta = 90 * 0.0174532925
+                self.center_x = nx+30*cos(theta)
+                self.center_y = ny+30*sin(theta)
+                print theta
+
+    def on_touch_up(self,touch):
+        if touch.grab_current is self:
+            print "OK"
+            touch.ungrab(self)
+            self.begin()
+            return True
+    
+    def begin(self):
+        self.center_x = self.parent.width / 10
+        self.center_y = 70
 
 class UselessGame(Widget):
     ball = ObjectProperty(None)
-    #joy = ObjectProperty()
+    joy = ObjectProperty(None)
     
     def update(self,dt):
         self.bounce_ball(self.ball)
-
+    
     def bounce_ball(self,ball):
         if ball.y < 0:
             ball.y = 0
