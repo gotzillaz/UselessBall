@@ -66,6 +66,7 @@ class UselessGame(Widget):
     joy = ObjectProperty(None)
     
     def update(self,dt):
+        print self.ball.size
         self.bounce_ball(self.ball)
     
     def bounce_ball(self,ball):
