@@ -27,6 +27,12 @@
         center_x: (root.width * 3) / 4
         top: root.top - 50
         text: "%d,%d" % (self.parent.ball.x, self.parent.ball.y)
+
+    Label:
+        font_size: 30
+        x: (root.width) / 10 * 3
+        top: 100
+        text: "<- Use this white dot to move a red dot"
     
     UselessBall:
         id: game_ball
