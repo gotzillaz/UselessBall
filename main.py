@@ -46,11 +46,11 @@ class UselessJoy(Widget):
                 self.center_y = ny+30*sin(theta)
             self.rad = theta
             self.dis = way/30.0
-            print "Rad = " + str(theta) + " Distance = " + str(self.dis)
+            print("Rad = " + str(theta) + " Distance = " + str(self.dis))
 
     def on_touch_up(self,touch):
         if touch.grab_current is self:
-            print "OK"
+            print("OK")
             touch.ungrab(self)
             self.begin()
             return True
@@ -66,7 +66,7 @@ class UselessGame(Widget):
     joy = ObjectProperty(None)
     
     def update(self,dt):
-        print self.ball.size
+        #print(self.ball.size)
         self.bounce_ball(self.ball)
     
     def bounce_ball(self,ball):
