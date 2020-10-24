@@ -4,7 +4,7 @@
     size: 50,50
     canvas:
         Color:
-            rgba: 1,0,0,1
+            rgba: self.color
         Ellipse:
             pos: self.pos
             size: self.size
@@ -32,7 +32,7 @@
         font_size: 30
         x: (root.width) / 10 * 3
         top: 100
-        text: "<- Use this white dot to move a red dot"
+        text: "<- Use this small dot to move a big dot"
     
     UselessBall:
         id: game_ball
