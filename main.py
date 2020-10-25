@@ -81,6 +81,7 @@ class UselessGame(Widget):
     def update(self, dt):
         self.bounce_ball(self.ball)
         self.random_bounce_ball(self.randomball)
+        self.check_collision(self.ball, self.randomball)
     
     def bounce_ball(self, ball):
         ball.center_x += self.joy.dis * 10 * cos(self.joy.rad)
@@ -153,6 +154,12 @@ class UselessGame(Widget):
         elif randomball.center_y <= randomball.height / 2.0:
             self.theta = random.uniform(0, 180)
             randomball.update_color()
+
+    def check_collision(self, ball, randomball):
+        distance = sqrt((ball.center_x - randomball.center_x)**2 + (ball.center_y - randomball.center_y)**2)
+        if distance <= 50:
+            randomball.center_x = random.randint(25, self.width - 25)
+            randomball.center_y = random.randint(25, self.height - 25)
 
 class UselessApp(App):
     def build(self):
