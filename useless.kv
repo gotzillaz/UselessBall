@@ -21,6 +21,7 @@
 <UselessGame>
     ball: game_ball
     joy: game_joy
+    randomball: bounce_randomball
 
     Label:         
         font_size: 70
@@ -37,6 +38,11 @@
     UselessBall:
         id: game_ball
         center: self.parent.center
+
+    UselessBall:
+        id: bounce_randomball
+        center:25,root.top-25
+
 
     UselessJoy:
         id: game_joy
