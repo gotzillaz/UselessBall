@@ -77,6 +77,7 @@ class UselessGame(Widget):
     speed = 5
     move_x = "Right"
     move_y = "None"
+    theta = 90
     
     def update(self, dt):
         self.bounce_ball(self.ball)
@@ -110,7 +111,7 @@ class UselessGame(Widget):
         else:
             ball.is_x = False
     
-    def random_bounce_ball(self, randomball):
+    def ball_around_border(self, randomball):
         # Movement conditions
         if randomball.center_x == 25 and randomball.center_y >= self.height - randomball.height / 2.0:
             self.move_x = "Right"
@@ -137,6 +138,22 @@ class UselessGame(Widget):
             randomball.center_y += self.speed
         elif self.move_y is "Down":
             randomball.center_y -= self.speed
+    
+    def random_bounce_ball(self, randomball):
+        randomball.center_x += self.speed*cos(radians(self.theta))
+        randomball.center_y += self.speed*sin(radians(self.theta))
+        if randomball.center_x <= 25:
+            self.theta = random.uniform(-89, 90)
+            randomball.update_color()
+        elif randomball.center_x >= self.width - randomball.width / 2.0:
+            self.theta = random.uniform(91, 270)
+            randomball.update_color()
+        elif randomball.center_y >= self.height - randomball.height / 2.0:
+            self.theta = random.uniform(181, 360)
+            randomball.update_color()
+        elif randomball.center_y <= randomball.height / 2.0:
+            self.theta = random.uniform(0, 180)
+            randomball.update_color()
 
 class UselessApp(App):
     def build(self):
