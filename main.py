@@ -79,7 +79,6 @@ class UselessGame(Widget):
     move_y = "None"
     
     def update(self, dt):
-        #print(self.ball.size)
         self.bounce_ball(self.ball)
         self.random_bounce_ball(self.randomball)
     
@@ -112,51 +111,24 @@ class UselessGame(Widget):
             ball.is_x = False
     
     def random_bounce_ball(self, randomball):
-        print(self.move_x, self.move_y)
-        print(randomball.center_x, randomball.center_y)
-        print(randomball.width / 2.0)
-        # Check movement condition
-        # x-axis
-        # if randomball.center_x <= randomball.width / 2.0:
-        #     print("> 1")
-        #     self.move_x = "None"
-        #     self.move_y = "Up"
-        #     # randomball.update_color()
-        if randomball.center_x > self.width - randomball.width / 2.0 - 1:
-            print(">> 2")
-            self.move_x = "None"
-            self.move_y = "Down"
-            # randomball.update_color()
-        # # y-axis
-        if randomball.center_y < randomball.width / 2.0 + 1:
-            print(">>> 3")
-            self.move_x = "Left"
-            self.move_y = "None"
-            # randomball.update_color()
-        # elif randomball.center_y > self.width - randomball.width / 2.0 - 1:
-        if randomball.center_y > self.height - randomball.height / 2.0 - 1:
-            print(">>>> 4")
+        # Movement conditions
+        if randomball.center_x == 25 and randomball.center_y >= self.height - randomball.height / 2.0:
             self.move_x = "Right"
             self.move_y = "None"
-            # randomball.update_color()
-        if randomball.center_x < randomball.width / 2.0:
-            print("> 1")
+            randomball.update_color()
+        elif randomball.center_x >= self.width - randomball.width / 2.0 and randomball.center_y == self.height - randomball.height / 2.0:
+            self.move_x = "None"
+            self.move_y = "Down"
+            randomball.update_color()
+        elif randomball.center_x == self.width - randomball.width / 2.0 and randomball.center_y <= randomball.height / 2.0:
+            self.move_x = "Left"
+            self.move_y = "None"
+            randomball.update_color()
+        elif randomball.center_x <= 25 and randomball.center_y == randomball.height / 2.0:
             self.move_x = "None"
             self.move_y = "Up"
-            # randomball.update_color()
-
-
-            
-        # y-axis
-        # if randomball.center_y <= randomball.width / 2.0:
-        #     self.move_y = "Down"
-        #     randomball.update_color()
-        # elif randomball.center_y >= self.width - randomball.width / 2.0:
-        #     self.move_y = "Up"
-        #     randomball.update_color()
-        # else:
-        #     self.move_y = "None"
-
+            randomball.update_color()
+        # Move ball
         if self.move_x is "Left":
             randomball.center_x -= self.speed
         elif self.move_x is "Right":
@@ -165,15 +137,6 @@ class UselessGame(Widget):
             randomball.center_y += self.speed
         elif self.move_y is "Down":
             randomball.center_y -= self.speed
-        
-        # if self.isMoveLeft:
-        #     randomball.center_x += 5
-        # else:
-        #     randomball.center_x -= 5
-        # if self.isMoveDown:
-        #     randomball.center_y += 5
-        # else:
-        #     randomball.center_y -= 5
 
 class UselessApp(App):
     def build(self):
