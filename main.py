@@ -110,7 +110,7 @@ class UselessGame(Widget):
             ball.is_x = True
         else:
             ball.is_x = False
-    
+   
     def ball_around_border(self, randomball):
         # Movement conditions
         if randomball.center_x == 25 and randomball.center_y >= self.height - randomball.height / 2.0:
