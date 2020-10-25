@@ -74,11 +74,11 @@ class UselessGame(Widget):
     ball = ObjectProperty(None)
     randomball = ObjectProperty(None)
     joy = ObjectProperty(None)
-    isMoveLeft = True
-    update_pos = 1
+    speed = 5
+    move_x = "Right"
+    move_y = "None"
     
     def update(self, dt):
-        #print(self.ball.size)
         self.bounce_ball(self.ball)
         self.random_bounce_ball(self.randomball)
     
@@ -111,16 +111,32 @@ class UselessGame(Widget):
             ball.is_x = False
     
     def random_bounce_ball(self, randomball):
-        if randomball.center_x <= randomball.width / 2.0:
-            self.isMoveLeft = True
+        # Movement conditions
+        if randomball.center_x == 25 and randomball.center_y >= self.height - randomball.height / 2.0:
+            self.move_x = "Right"
+            self.move_y = "None"
             randomball.update_color()
-        elif randomball.center_x >= self.width - randomball.width / 2.0:
-            self.isMoveLeft = False
+        elif randomball.center_x >= self.width - randomball.width / 2.0 and randomball.center_y == self.height - randomball.height / 2.0:
+            self.move_x = "None"
+            self.move_y = "Down"
             randomball.update_color()
-        if self.isMoveLeft:
-            randomball.center_x += 5
-        else:
-            randomball.center_x -= 5
+        elif randomball.center_x == self.width - randomball.width / 2.0 and randomball.center_y <= randomball.height / 2.0:
+            self.move_x = "Left"
+            self.move_y = "None"
+            randomball.update_color()
+        elif randomball.center_x <= 25 and randomball.center_y == randomball.height / 2.0:
+            self.move_x = "None"
+            self.move_y = "Up"
+            randomball.update_color()
+        # Move ball
+        if self.move_x is "Left":
+            randomball.center_x -= self.speed
+        elif self.move_x is "Right":
+            randomball.center_x += self.speed
+        if self.move_y is "Up":
+            randomball.center_y += self.speed
+        elif self.move_y is "Down":
+            randomball.center_y -= self.speed
 
 class UselessApp(App):
     def build(self):
