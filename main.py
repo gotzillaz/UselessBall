@@ -72,13 +72,17 @@ class UselessJoy(Widget):
 
 class UselessGame(Widget):
     ball = ObjectProperty(None)
+    randomball = ObjectProperty(None)
     joy = ObjectProperty(None)
+    isMoveLeft = True
+    update_pos = 1
     
-    def update(self,dt):
+    def update(self, dt):
         #print(self.ball.size)
         self.bounce_ball(self.ball)
+        self.random_bounce_ball(self.randomball)
     
-    def bounce_ball(self,ball):
+    def bounce_ball(self, ball):
         ball.center_x += self.joy.dis*10*cos(self.joy.rad)
         ball.center_y += self.joy.dis*10*sin(self.joy.rad)
         if ball.y < 0:
@@ -105,6 +109,18 @@ class UselessGame(Widget):
             ball.is_x = True
         else:
             ball.is_x = False
+    
+    def random_bounce_ball(self, randomball):
+        if randomball.center_x <= randomball.width / 2.0:
+            self.isMoveLeft = True
+            randomball.update_color()
+        elif randomball.center_x >= self.width - randomball.width / 2.0:
+            self.isMoveLeft = False
+            randomball.update_color()
+        if self.isMoveLeft:
+            randomball.center_x += 5
+        else:
+            randomball.center_x -= 5
 
 class UselessApp(App):
     def build(self):
