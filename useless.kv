@@ -10,7 +10,7 @@
             size: self.size
 
 <UselessJoy>:
-    size: 30,30
+    size: 20, 20
     canvas:
         Color:
             rgba: 1,1,1,1
@@ -24,7 +24,7 @@
     joy: game_joy
 
     Label:         
-        font_size: 70
+        font_size: 50
         center_x: (root.width * 3) / 4
         top: root.top - 50
         text: "%d,%d" % (self.parent.ball.x, self.parent.ball.y)
@@ -34,6 +34,12 @@
         x: (root.width) / 10 * 3
         top: 100
         text: "<- Use this small dot to move a big dot"
+
+    Label:
+        font_size: 50
+        center_x: (root.width * 3) / 4 - 30
+        top: root.top - 120
+        text: "Hit: %d" % (1)
     
     UselessBall:
         id: game_ball
