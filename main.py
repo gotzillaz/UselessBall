@@ -79,7 +79,7 @@ class UselessGame(Widget):
     move_y = "None"
     theta = 90
     isHitWall = False
-    hit_count = 0
+    hit_count = NumericProperty(0)
     
     def update(self, dt):
         self.bounce_ball(self.ball)
