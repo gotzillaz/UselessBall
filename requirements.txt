@@ -1,11 +1,9 @@
-certifi==2019.9.11
+certifi==2021.10.8
 chardet==3.0.4
-Cython==0.29.13
 docutils==0.15.2
-ffpyplayer==4.2.0
 idna==2.8
-Kivy==1.11.1
+Kivy==2.0.0
 Kivy-Garden==0.1.4
-Pygments==2.7.4
-requests==2.22.0
-urllib3==1.26.5
+Pygments==2.10.0
+requests==2.26.0
+urllib3==1.26.7
