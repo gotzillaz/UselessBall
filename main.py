@@ -7,6 +7,7 @@ from math import *
 import random
 
 class UselessBall(Widget):
+    # number of hit wall
     vx = NumericProperty(1)
     vy = NumericProperty(1)
     color = [1, 0, 0, 1]
@@ -77,6 +78,8 @@ class UselessGame(Widget):
     move_x = "Right"
     move_y = "None"
     theta = 90
+    isHitWall = False
+    hit_count = 0
     
     def update(self, dt):
         self.bounce_ball(self.ball)
@@ -145,15 +148,23 @@ class UselessGame(Widget):
         if randomball.center_x <= 25:
             self.theta = random.uniform(-89, 90)
             randomball.update_color()
+            self.isHitWall = True
         elif randomball.center_x >= self.width - randomball.width / 2.0:
             self.theta = random.uniform(91, 270)
             randomball.update_color()
+            self.isHitWall = True
         elif randomball.center_y >= self.height - randomball.height / 2.0:
             self.theta = random.uniform(181, 360)
             randomball.update_color()
+            self.isHitWall = True
         elif randomball.center_y <= randomball.height / 2.0:
             self.theta = random.uniform(0, 180)
             randomball.update_color()
+            self.isHitWall = True
+        if self.isHitWall:
+            self.hit_count += 1
+            print("Hit!: ", self.hit_count)
+            self.isHitWall = False
 
     def check_collision(self, ball, randomball):
         distance = sqrt((ball.center_x - randomball.center_x)**2 + (ball.center_y - randomball.center_y)**2)
